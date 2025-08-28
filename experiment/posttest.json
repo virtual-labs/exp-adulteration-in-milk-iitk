@@ -2,12 +2,12 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "This is a Sample Question 1?",
+      "question": "1.Which color indicates the presence of starch in milk during the test?",
       "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+        "a": "Red",
+        "b": "Yellow",
+        "c": "Blue",
+        "d": "Green"
       },
       "explanations": {
         "a": "Explanation 1  <a href='www.google.com'>here</a>",
@@ -15,16 +15,67 @@
         "c": "Explanation 2",
         "d": "Explanation 2"
       },
-      "correctAnswer": "a",
+      "correctAnswer": "c",
       "difficulty": "beginner"
     },
     {
-      "question": "This is a Sample Question 2?",
+      "question": "2.What is the function of DMAB reagent in urea detection?",
       "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+        "a": "To dissolve milk fat",
+        "b": "To bind with water",
+        "c": "To react with urea and produce yellow color",
+        "d": "To remove protein"
+      },
+      "explanations": {
+        "a": "Explanation 1  <a href='www.google.com'>here</a>",
+        "b": "Explanation 2",
+        "c": "Explanation 2",
+        "d": "Explanation 2"
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "3.In the detergent test, what does an intense blue color in the lower layer indicate?",
+      "answers": {
+        "a": "No adulteration",
+        "b": "Presence of starch",
+        "c": "Presence of detergent",
+        "d": "High protein content"
+      },
+      "explanations": {
+        "a": "Explanation 1  <a href='www.google.com'>here</a>",
+        "b": "Explanation 2",
+        "c": "Explanation 2",
+        "d": "Explanation 2"
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "4.What is the role of chloroform in the detergent test?",
+      "answers": {
+        "a": "To sterilize milk",
+        "b": "To color milk",
+        "c": "To separate the detergent by forming layers",
+        "d": "To measure milk acidity"
+      },
+      "explanations": {
+        "a": "Explanation 1  <a href='www.google.com'>here</a>",
+        "b": "Explanation 2",
+        "c": "Explanation 2",
+        "d": "Explanation 2"
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "5.Which of the following statements is TRUE based on the lab experiment?",
+      "answers": {
+        "a": "Iodine solution turns yellow in the presence of starch",
+        "b": "DMAB reagent is used to detect starch",
+        "c": "Intensity of blue color in upper layer confirms detergent",
+        "d": "Urea cannot be detected with simple reagents"
       },
       "explanations": {
         "a": "Explanation 1  <a href='www.google.com'>here</a>",

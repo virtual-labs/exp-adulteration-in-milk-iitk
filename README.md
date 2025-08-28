@@ -1,24 +1,26 @@
 ## Introduction
 
 
-<b>Discipline | <b>Fill your discipline name here
+<b>Discipline | <b>Food Technology
 :--|:--|
-<b> Lab | <b> Fill your lab name here
-<b> Experiment|     <b> Fill your experiment name and number here
+<b> Lab | <b> DAIRY TECHNOLOGY LAB
+<b> Experiment|     <b> Analysis of Adulteration in Milk and Milk products
 
 ### About the Experiment 
 
-Fill a brief description of this experiment here
+In this experiment, the presence of common adulterants in milk and milk products will be detected which is essential for ensuring the safety, authenticity, and compliance of dairy products with food quality regulations. Detecting adulteration helps in protecting consumer health, maintaining product integrity, and supporting regulatory enforcement. The experiment also imparts practical knowledge in food fraud detection and quality assurance in the dairy industry.
 
-<b>Name of Developer | <b> Fill the name of experiment owner here 
+<b>Name of Developer | <b> Dr. Vivek Kumar
 :--|:--|
-<b> Institute | <b>  
-<b> Email id|     <b>  
-<b> Department |  
+<b> Institute | <b>  Harcourt Butler Technical University, Kanpur
+<b> Email id|     <b>  viveksachan99@gmail.com
+<b> Department | <b> Food Technology
 
 ### Contributors List
 
 SrNo | Name | Faculty or Student | Department| Institute | Email id
 :--|:--|:--|:--|:--|:--|
-1 | . | . | . | . | .
-2 | . | . | . | . | .
+1 | Er. Anjali Srivastava | Faculty | Food Technology | Institute of Engineering & Technology, Bundelkhand University, Jhansi | fetbujhansi@gmail.com
+2 | Dr. Anupam Vyas  | Faculty | Electronics & Communication Engineering | Institute of Engineering & Technology, Bundelkhand University, Jhansi | dr.anupam@bujhansi.ac.in
+3 | Dr. Sanjeev Kumar Shrivastava  | Faculty | Physics | Bundelkhand University, Jhansi | sksphys7@gmail.com
+4 | Siddhant Raj  | Student | Computer Science & Engineering | Institute of Engineering & Technology, Bundelkhand University, Jhansi | siddhantraj284@gmail.com

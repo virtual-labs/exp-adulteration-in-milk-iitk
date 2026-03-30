@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Virtual Lab - Dairy Technology</title>
+<style>
+/* ===== RESET ===== */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+#lab{position:relative;width:100vw;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;}
+#labTitle{position:absolute;top:39%;left:46.5%;transform:translateX(-50%);color:#fff;font-weight:700;letter-spacing:2px;font-size:clamp(22px,3vw,42px);text-shadow:0 0 6px rgba(0,0,0,0.8),0 0 12px rgba(0,0,0,0.6);z-index:5;pointer-events:none;}
+#bg{position:absolute;width:100%;height:100%;object-fit:cover;z-index:0;}
+#instruction{position:absolute;top:0;width:100%;padding:12px;background:rgba(0,0,0,0.65);color:#fff;text-align:center;font-size:clamp(14px,2vw,20px);z-index:20;font-weight:bold;}
+.lab-row{position:absolute;bottom:6vh;width:95%;display:flex;justify-content:center;align-items:flex-end;gap:1.2vw;z-index:10;}
+.apparatus{position:relative;width:14vw;max-width:200px;height:28vh;display:flex;justify-content:center;align-items:flex-end;cursor:pointer;border-radius:12px;transition:0.3s ease;}
+.apparatus img{max-width:100%;max-height:100%;object-fit:contain;}
+.apparatus:hover{transform:translateY(-5px);box-shadow:0 0 15px rgba(255,255,255,0.6),0 0 25px rgba(0,180,255,0.7);background:rgba(255,255,255,0.08);}
+.apparatus::after,.tube::after{content:attr(data-name);position:absolute;bottom:-24px;left:50%;transform:translateX(-50%);background:black;color:white;padding:4px 8px;font-size:12px;border-radius:6px;opacity:0;transition:0.3s;white-space:nowrap;pointer-events:none;}
+.apparatus:hover::after,.tube:hover::after{opacity:1;}
+.apparatus.no-hover:hover{transform:none;box-shadow:none;background:transparent;transition:none !important;}
+.no-tooltip::after{display:none !important;}
+.bottle{position:relative;transform:translateY(5px) scale(1.35);z-index:10;overflow:hidden;}
+.bottle img:first-child{position:relative;z-index:11;pointer-events:auto;}
+.bottle .cap{position:absolute;width:18%;top:-6%;left:40.5%;z-index:9;pointer-events:none;}
+.stand-box{width:16vw;max-width:240px;height:22vh;position:relative;display:flex;justify-content:center;align-items:flex-end;}
+.stand{position:absolute;bottom:0;left:0;width:100%;pointer-events:none;}
+.back{z-index:1;}
+.front{z-index:8;bottom:9.7vh;left:-3%;}
+.tube{position:absolute;width:1.8vw;height:100%;min-width:22px;bottom:2vh;z-index:4;transition:0.3s ease;cursor:pointer;}
+.tube img{
+position:absolute;
+bottom:0;
+left:0;
+width:100%;
+object-fit:contain;
+}
+.tubeA{left:38%; z-index: 4;}
+.tubeB{left:52%;}
+[data-name="Milk A"]{
+position: relative;
+transform-origin: top right;
+z-index: 30;
+}
+.tube:hover{transform:translateY(-4px);box-shadow:0 0 10px rgba(255,255,255,0.7),0 0 18px rgba(0,200,255,0.8);}
+.cylinder{width:26vw;max-width:190px;left:6%;transform:translateY(3px) scale(1.9);z-index:12;pointer-events:auto;}
+.cylinder.no-hover:hover{transform:translateY(3px) scale(1.9);box-shadow:none;background:transparent;transition:none;}
+.cylinder{
+position:relative;
+}
+
+.cylinder img{
+position:absolute;
+bottom:0;
+left:0;
+width:150px;
+object-fit:contain;
+}
+
+#waterBath_lower3{
+  position: absolute;
+  top: 73%;
+  left: 58%;
+  height: 19%;
+  width: 20%;
+  visibility: visible;
+  z-index: 20;
+}
+
+#waterBath_upper3{
+  position: absolute;
+  top: 73.2%;
+  left: 58.1%;
+  height: 1.9%;
+  width: 18.97%;
+  visibility: visible;
+  z-index: 3;
+}
+
+#clock{
+   position: absolute;
+  top: 75.2%;
+  left: 42.1%;
+  height: 21%;
+  width: 10.6%;
+  z-index: 40;
+  visibility: hidden;
+}
+
+#onSwitchHolder3{
+   position: absolute;
+  top: 87%;
+  left: 61.2%;
+  height: 3.5%;
+  width: 1.6%;
+  visibility: visible;
+  z-index: 40;
+}
+
+#setButtonHolder3{
+   position: absolute;
+  top: 87.1%;
+  left: 64.4%;
+  height: 3%;
+  width: 2%;
+  visibility: visible;
+  z-index: 40;
+}
+
+#offSwitch3{
+   position: absolute;
+  top: 87.2%;
+  left: 61.45%;
+  height: 4.6%;
+  width: 1.6%;
+  visibility: visible;
+  z-index: 40;
+}
+
+#onSwitch3{
+   position: absolute;
+  top: 87.3%;
+  left: 61.45%;
+  height: 1.6%;
+  width: 1.2%;
+  visibility: hidden;
+  z-index: 40;
+}
+
+#upOffSwitch3{
+   position: absolute;
+  top: 80.5%;
+  left: 66.93%;
+  height: 2.6%;
+  width: 1.2%;
+  visibility: visible;
+  z-index: 40;
+}
+
+#downSwitch3{
+   position: absolute;
+  top: 83.5%;
+  left: 66.93%;
+  height: 2.6%;
+  width: 1.2%;
+  visibility: visible;
+  z-index: 40;
+}
+
+#setOff3{
+   position: absolute;
+  top: 87.5%;
+  left: 64.6%;
+  height: 1%;
+  width: 1.5%;
+  visibility: visible;
+  z-index: 40;
+}
+
+#timerDisplay13{
+  position: absolute;
+  color: rgb(40, 237, 0);
+  font-weight: bold;
+  font-size: 2vw;
+
+  top: 81.4%;
+  left: 45%;
+  height: 1%;
+  width: 1.5%;
+  z-index: 45;
+  visibility: hidden;
+}
+
+#actualTempDisplay13{
+  position: absolute;
+   color: cyan;
+  font-weight: bold;
+  font-size: 1.0vw;
+  text-align: center;
+    top: 80.45%;
+   left: 61.52%;
+   z-index: 80;
+   visibility: visible;
+}
+
+#sampleTempDisplay13{
+  position: absolute;
+   color: cyan;
+  font-weight: bold;
+  font-size: 1.0vw;
+  text-align: center;
+    top: 83%;
+   left: 61.52%;
+   z-index: 80;
+   visibility: visible;
+}
+
+#actualTempDisplay3{
+  position: absolute;
+    color: rgb(255, 247, 0);
+  font-weight: bold;
+  font-size: 1.0vw;
+  text-align: center;
+    top: 80.45%;
+   left: 63.93%;
+   z-index: 80;
+   visibility: hidden;
+}
+
+#stand_front{
+  position: absolute;
+  height: 2%;
+  width: 15.3%;
+  left: 20.8%;
+  top: 82%;
+  z-index: 30;
+}
+
+#iodine_bottle{
+  position: absolute;
+  height: 40%;
+  width: 17.3%;
+  left: 53.8%;
+  top: 65%;
+  z-index: 30;
+  visibility: hidden;
+}
+
+#test_tube_blue{
+  position: absolute;
+  height: 20%;
+  width: 1.5%;
+  left: 27.3%;
+  top: 72%;
+  z-index: 11;
+  visibility: hidden;
+}
+
+#iodine_bottle_cap{
+  position: absolute;
+  height: 20%;
+  width: 3.3%;
+  left: 60.8%;
+  top: 63%;
+  z-index: 20;
+  visibility: hidden;
+  transition: all 1s;
+}
+
+#water_drop{
+  position: absolute;
+  height: 3%;
+  width: 0.7%;
+  left: 27.8%;
+  top: 68%;
+  z-index: 1;
+  visibility: hidden;
+  transition: all 1s;
+}
+
+#water_drop1{
+  position: absolute;
+  height: 3%;
+  width: 0.7%;
+  left: 32.3%;
+  top: 68%;
+  z-index: 1;
+  visibility: hidden;
+  transition: all 1s;
+}
+
+#sampleTempDisplay3{
+  position: absolute;
+    color: rgb(77, 255, 0);
+
+  font-weight: bold;
+  font-size: 1.0vw;
+  text-align: center;
+    top: 83%;
+   left: 63.93%;
+   z-index: 80;
+   visibility: hidden;
+}
+
+#water_bath{
+  display: none;
+}
+
+
+#observation_table_detergent{
+  visibility: hidden;
+}
+#inference_box{
+  visibility: hidden;
+}
+.table-container_mbrt {
+  position: absolute;
+  top: 5vw;
+  left: 48%;
+  transform: translateX(-50%);
+
+  width: 90vw;
+  max-width: 68.75vw;
+
+  background: white;
+  padding: 0.94vw;
+
+  border: 0.19vw solid black;
+  border-radius: 0.5vw;
+
+  z-index: 10;
+}
+
+/* table styles ONLY for MBRT */
+.table-container_mbrt table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+/* table cells */
+.table-container_mbrt th,
+.table-container_mbrt td {
+  border: 0.125vw solid black;
+  padding: 0.63vw;
+  font-size: 1vw;
+}
+
+/* table header */
+.table-container_mbrt th {
+  background-color: black;
+  color: white;
+  font-size: 1.05vw;
+}
+
+/* visible rows/cells */
+.table-container_mbrt .hidden {
+  visibility: visible;
+}
+
+
+
+@keyframes pulse {
+  0% { transform: scale(1); border-radius: 50%; }
+  50% { transform: scale(0.9); border-radius: 30%; }
+  100% { transform: scale(1); border-radius: 50%; }
+}
+
+
+.pulse-effect {
+  animation: pulse 0.5s ease-in-out;
+}
+
+
+#nextBtn{position:absolute;bottom:20px;left:20px;padding:10px 20px;font-size:15px;border:none;border-radius:8px;background:#007bff;color:white;cursor:pointer;z-index:30;}
+#nextBtn:hover{background:#0056b3;}
+@media(max-width:1024px){.lab-row{gap:2vw;bottom:5vh;}.apparatus{width:18vw;height:24vh;}.tube{width:2.8vw;}}
+@media(max-width:600px){.lab-row{gap:3vw;bottom:4vh;}.apparatus{width:22vw;height:20vh;}.stand-box{width:28vw;}.tube{width:4vw;bottom:3vh;}}
+.hide-apparatus{opacity:0;transform:translateY(40px);pointer-events:none;transition:all 0.6s ease;}
+.focus{transform:scale(1.08);z-index:20;transition:transform 0.4s ease;}
+#milkStream{
+position:absolute;
+width:16px;
+height:0;
+background:white;
+opacity:0;
+border-radius:10px;
+z-index:50;
+transition:height 0.8s ease, opacity 0.3s ease;
+box-shadow:0 0 10px rgba(255,255,255,0.9);
+}/* Milk Pour Animation */
+@keyframes milkPourAnim{
+0% {transform:translate(0,0) rotate(0deg);}
+50% {transform:translate(120px,-100px) rotate(-45deg);}
+80% {transform:translate(120px,-100px) rotate(-45deg);}
+100% {transform:translate(0,0) rotate(0deg);}
+}
+.pour-animation{animation:milkPourAnim 2s forwards;}
+
+
+</style>
+</head>
+<body>
+
+<div id="lab">
+
+  <div class="table-container_mbrt" id="observation_table_detergent">
+
+  <h2 style="text-align:center;">Observation Table</h2>
+
+  <p style="font-size:1vw; text-align:left; padding: 0.5vw;">
+    <strong>Observation:</strong> Development of blue colour indicates presence of starch.
+  </p>
+
+  <table>
+    <tr>
+      <th>Sample</th>
+      <th>Color Observation</th>
+      <th>Starch Adulteration</th>
+    </tr>
+
+    <tr>
+      <td>A</td>
+      <td>Blue</td>
+      <td>Yes</td>
+    </tr>
+
+    <tr>
+      <td>B</td>
+      <td>White</td>
+      <td>No</td>
+    </tr>
+  </table>
+
+</div>
+
+<!-- Inference Section -->
+<div class="table-container_mbrt" id="inference_box" style="top: 21vw;">
+
+  <h2 style="text-align:center;">Inference</h2>
+
+  <ul style="font-size:1vw; padding: 1vw 2vw; text-align:left; list-style-type: disc;">
+    <li>Sample A shows presence of starch as blue colour is developed.</li>
+    <li>Sample B shows absence of starch as no blue colour is observed.</li>
+  </ul>
+   <div style="display:flex; justify-content:center; gap:20px; margin-top:10px;">
+
+  <button id="resetBtn" style="padding:10px 20px; font-size:16px; border:none; border-radius:8px; background:#b23a3a; color:white; cursor:pointer;">
+    🔄 Reset Experiment
+  </button>
+
+  <button id="nextExpBtn" style="padding:10px 20px; font-size:16px; border:none; border-radius:8px; background:#235d3f; color:white; cursor:pointer;">
+    Next Experiment ➜
+  </button>
+
+</div>
+</div>
+
+
+    <div id="timerDisplay13">00:00</div>
+      <img src="Images/8A/test-tube-stand-front.png" class="stand front" id = "stand_front">
+<img src="Images/8A/iodine-bottle.png" id = "iodine_bottle">
+        <img src="Images/8A/iodine-cap.png" id = "iodine_bottle_cap">
+        <img src="Images/8A/water_drop.png" id = "water_drop">
+         <img src="Images/8A/water_drop.png" id = "water_drop1">
+
+<img src="Images/8A/test-tube-blue.png" id = "test_tube_blue">
+
+<img id="clock" class = "equipment" src="images/8A/clock.png" alt="Empty Pipette" />
+  <div id = "water_bath">
+      <img id="waterBath_lower3" src="images/8A/water_bath_lower.png" alt="Water Bath" />
+    <img id="waterBath_upper3" src="images/8A/waterbath  upper.png" alt="Water Bath" />
+      
+
+        <div id="actualTempDisplay13">SV</div>
+    <div id="sampleTempDisplay13">PV</div>
+
+      <div id="actualTempDisplay3">25°C</div>
+    <div id="sampleTempDisplay3">25°C</div>
+
+        <img id="onSwitchHolder3" src="images/8A/on_switch_holder.png" alt="On Switch Holder" />
+         <img id="setButtonHolder3" src="images/8A/set_button_holder.png" alt="Set Button Holder" />
+
+        
+
+          <img id="setOff3" src="images/8A/set_off.png" alt="Set Off" />
+   
+             <img id="upOffSwitch3" src="images/8A/up off switch.png" alt="Up Off Switch" />
+            <img id="downSwitch3" src="images/8A/down switch.png" alt="Down Switch" />
+
+      <img id="offSwitch3" src="images/8A/off switchh.png" alt="Off Switch" />
+    <img id="onSwitch3" src="images/8A/on_switch.png" alt="On Switch" />
+
+  </div>
+  <img src="Images/8A/bgImage.png" id="bg">
+  <div id="labTitle">Dairy Technology Lab</div>
+  <div id="instruction">Observe the apparatus setup</div>
+ 
+
+  <div class="lab-row">
+
+    <div class="apparatus" data-name="Water Bath">
+        <img src="Images/8A/water_bath_familiar.png">
+    </div>
+
+    <div class="apparatus stand-box" data-name="Test Tube Stand">
+        <img src="Images/8A/test-tube-stand-back.png" class="stand back">
+        <div class="tube tubeA" data-name="Test Tube A">
+            <img src="Images/8A/tube.png">
+            <img src="Images/8A/test-tube-milk.png" class="tube-milk hide-apparatus">
+
+        </div>
+        <div class="tube tubeB" data-name="Test Tube B">
+            <img src="Images/8A/tube.png">
+              <img src="Images/8A/test-tube-milk.png" class="tube-milk hide-apparatus">
+        </div>
+    
+    </div>
+
+    <div class="apparatus cylinder" data-name="Measuring Cylinder">
+        <img src="Images/8A/measuring-cylinder.png" class="cylinder-empty">
+        <img src="Images/8A/measuring-cylinder-milk.png" class="cylinder-milk hide-apparatus">
+    </div>
+
+    <div class="apparatus" data-name="Milk A">
+        <img src="Images/8A/MilkA.png">
+    </div>
+
+    <div class="apparatus" data-name="Milk B">
+        <img src="Images/8A/MilkB.png">
+    </div>
+
+    <div class="apparatus bottle" data-name="Iodine Bottle">
+        <img src="Images/8A/iodine-bottle.png">
+        <img src="Images/8A/iodine-cap.png" class="cap">
+    </div>
+
+  </div>
+    <div id="milkStream"></div>
+
+  <button id="nextBtn">Next ➜</button>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const nextBtn = document.getElementById("nextBtn");
+  const instruction = document.getElementById("instruction");
+
+  const lab = document.getElementById("lab");
+  const milkA = document.querySelector('[data-name="Milk A"]');
+  const cylinderEmpty = document.querySelector('.cylinder-empty');
+  const cylinderMilk = document.querySelector('.cylinder-milk');
+  const milkStream = document.getElementById('milkStream');
+
+  
+  let step = 1;
+
+const tubeA = document.querySelector(".tubeA");
+const tubeAEmpty = tubeA.querySelector("img:first-child");
+const tubeAMilk = tubeA.querySelector(".tube-milk");
+const cylinder = document.querySelector(".cylinder");
+
+const milkB = document.querySelector('[data-name="Milk B"]');
+
+const tubeB = document.querySelector(".tubeB");
+const tubeBEmpty = tubeB.querySelector("img:first-child");
+const tubeBMilk = tubeB.querySelector(".tube-milk");
+
+
+
+
+const offSwitch3 = document.getElementById("offSwitch3");
+const onSwitch3 = document.getElementById("onSwitch3");
+
+const stand_front = document.getElementById("stand_front");
+
+const upOffSwitch3 = document.getElementById("upOffSwitch3");
+const downSwitch3 = document.getElementById("downSwitch3");
+
+const setOff3 = document.getElementById("setOff3");
+
+const water_bath = document.getElementById("water_bath");
+
+const timerDisplay13 = document.getElementById("timerDisplay13");
+
+const actualTempDisplay13 = document.getElementById("actualTempDisplay13");
+const sampleTempDisplay13 = document.getElementById("sampleTempDisplay13");
+
+const actualTempDisplay3 = document.getElementById("actualTempDisplay3");
+const sampleTempDisplay3 = document.getElementById("sampleTempDisplay3");
+
+const iodine_bottle = document.getElementById("iodine_bottle");
+const iodine_bottle_cap = document.getElementById("iodine_bottle_cap")
+const clock = document.getElementById("clock")
+
+const water_drop = document.getElementById("water_drop");
+const water_drop1 = document.getElementById("water_drop1");
+
+const test_tube_blue = document.getElementById("test_tube_blue");
+
+const observation_table_detergent = document.getElementById("observation_table_detergent");
+const inference_box = document.getElementById("inference_box");
+
+  setTimeout(() => {
+    instruction.textContent = "Instruction : Click on Next button to start the experiment";
+  }, 2000);
+nextBtn.addEventListener("click", () => {
+
+if(step === 1){
+
+nextBtn.style.display = "none";
+
+const allApparatus = document.querySelectorAll(".apparatus");
+
+allApparatus.forEach(app => {
+
+app.classList.remove("focus");
+app.classList.add("no-hover");
+app.classList.add("no-tooltip");
+
+const name = app.dataset.name;
+
+if(["Milk A","Milk B","Test Tube Stand","Measuring Cylinder"].includes(name)){
+app.classList.remove("hide-apparatus");
+} 
+else{
+app.classList.add("hide-apparatus");
+}
+
+});
+
+instruction.textContent =
+"Instruction : Click on Milk Sample A to pour 5 ml into the cylinder";
+
+}
+
+else if(step === 2){
+
+nextBtn.style.display = "none";
+
+instruction.textContent =
+"Instruction : Click on Test Tube A to transfer milk";
+
+}
+
+else if(step === 3){
+
+nextBtn.style.display = "none";
+
+instruction.textContent =
+"Instruction : Click on Milk Sample B to pour 5 ml into the cylinder";
+
+}
+
+else if(step === 4){
+
+nextBtn.style.display = "none";
+
+instruction.textContent =
+"Instruction : Click on Test Tube B to transfer milk";
+
+}
+});
+milkA.addEventListener("click", () => {
+
+instruction.textContent = "Pouring Milk A...";
+
+const labRect = lab.getBoundingClientRect();
+const milkRect = milkA.getBoundingClientRect();
+const cylinderRect = cylinderEmpty.getBoundingClientRect();
+
+const deltaX = (cylinderRect.left - milkRect.left) - 5;
+const deltaY = (cylinderRect.top - milkRect.top) - 60;
+// move bottle
+milkA.style.transition = "transform 0.8s ease";
+milkA.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+
+// tilt + start pouring
+// tilt + start pouring
+setTimeout(() => {
+
+milkA.style.transform =
+`translate(${deltaX}px, ${deltaY}px) rotate(-50deg)`;
+
+// position milk stream
+milkStream.style.left =
+(cylinderRect.left + cylinderRect.width/2 - labRect.left - 8) + "px";
+
+milkStream.style.top =
+(milkRect.top - labRect.top + milkRect.height - 210) + "px";
+
+// show stream
+milkStream.style.opacity = "1";
+milkStream.style.height = "120px";
+
+},800);
+// finish pouring
+setTimeout(() => {
+
+milkStream.style.height = "0";
+milkStream.style.opacity = "0";
+
+cylinderEmpty.classList.add("hide-apparatus");
+cylinderMilk.classList.remove("hide-apparatus");
+
+milkA.style.transform = "translate(0,0) rotate(0deg)";
+
+instruction.textContent =
+"Instruction : Milk Sample A poured into cylinder.";
+
+milkA.style.pointerEvents = "none";
+
+nextBtn.style.display = "block";
+step = 2;
+},2200);
+
+});
+
+tubeA.addEventListener("click", () => {
+
+if(step !== 2) return;
+
+instruction.textContent = "Transferring milk to Test Tube A...";
+nextBtn.style.display = "none";
+
+const labRect = lab.getBoundingClientRect();
+const tubeRect = tubeA.getBoundingClientRect();
+const cylRect = cylinder.getBoundingClientRect();
+
+const moveX =
+(tubeRect.left + tubeRect.width/2) - (cylRect.left + cylRect.width/2) + 68;
+
+const moveY =
+(tubeRect.top) - cylRect.top - 260;
+// move cylinder
+cylinder.style.transition = "transform 0.8s ease";
+cylinder.style.transform =
+`translate(${moveX}px, ${moveY}px) scale(1.9)`;
+
+// tilt + pour
+setTimeout(()=>{
+
+cylinder.style.transform =
+`translate(${moveX}px, ${moveY}px) rotate(-40deg) scale(1.9)`;
+
+milkStream.style.left =
+(tubeRect.left + tubeRect.width/2 - labRect.left - 8) + "px";
+
+milkStream.style.top =
+(cylRect.top - labRect.top + 30) + "px";
+
+milkStream.style.opacity = "1";
+milkStream.style.height = "90px";
+
+},800);
+
+// finish transfer
+setTimeout(()=>{
+
+milkStream.style.height = "0";
+milkStream.style.opacity = "0";
+
+tubeAEmpty.classList.add("hide-apparatus");
+tubeAMilk.classList.remove("hide-apparatus");
+
+cylinderMilk.classList.add("hide-apparatus");
+cylinderEmpty.classList.remove("hide-apparatus");
+
+cylinder.style.transform =
+"translate(0,3px) rotate(0deg) scale(1.9)";
+
+instruction.textContent =
+"Instruction : Milk transferred to Test Tube A.";
+
+nextBtn.style.display = "block";
+
+step = 3;
+
+},2200);
+
+});
+
+milkB.addEventListener("click", () => {
+
+if(step !== 3) return;
+
+instruction.textContent = "Pouring Milk B...";
+
+const labRect = lab.getBoundingClientRect();
+const milkRect = milkB.getBoundingClientRect();
+const cylinderRect = cylinderEmpty.getBoundingClientRect();
+
+const deltaX = (cylinderRect.left - milkRect.left) + 110;
+const deltaY = (cylinderRect.top - milkRect.top) - 60;
+
+milkB.style.transition = "transform 0.8s ease";
+milkB.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+
+// tilt
+setTimeout(()=>{
+
+milkB.style.transform =
+`translate(${deltaX}px, ${deltaY}px) rotate(-50deg)`;
+
+milkStream.style.left =
+(cylinderRect.left + cylinderRect.width/2 - labRect.left - 8) + "px";
+
+milkStream.style.top =
+(milkRect.top - labRect.top + milkRect.height - 210) + "px";
+
+milkStream.style.opacity = "1";
+milkStream.style.height = "120px";
+
+},800);
+
+// finish
+setTimeout(()=>{
+
+milkStream.style.height = "0";
+milkStream.style.opacity = "0";
+
+cylinderEmpty.classList.add("hide-apparatus");
+cylinderMilk.classList.remove("hide-apparatus");
+
+milkB.style.transform = "translate(0,0) rotate(0deg)";
+
+instruction.textContent =
+"Instruction : Milk Sample B poured into cylinder.";
+
+milkB.style.pointerEvents = "none";
+
+nextBtn.style.display = "block";
+
+step = 4;
+
+},2200);
+
+});
+
+tubeB.addEventListener("click", () => {
+
+if(step !== 4) return;
+
+instruction.textContent = "Transferring milk to Test Tube B...";
+nextBtn.style.display = "none";
+
+const labRect = lab.getBoundingClientRect();
+const tubeRect = tubeB.getBoundingClientRect();
+const cylRect = cylinder.getBoundingClientRect();
+
+const moveX =
+(tubeRect.left + tubeRect.width/2) - (cylRect.left + cylRect.width/2) + 68;
+
+const moveY =
+(tubeRect.top) - cylRect.top - 260;
+
+cylinder.style.transition = "transform 0.8s ease";
+cylinder.style.transform =
+`translate(${moveX}px, ${moveY}px) scale(1.9)`;
+
+// tilt
+setTimeout(()=>{
+
+cylinder.style.transform =
+`translate(${moveX}px, ${moveY}px) rotate(-40deg) scale(1.9)`;
+
+milkStream.style.left =
+(tubeRect.left + tubeRect.width/2 - labRect.left - 8) + "px";
+
+milkStream.style.top =
+(cylRect.top - labRect.top + 30) + "px";
+
+milkStream.style.opacity = "1";
+milkStream.style.height = "90px";
+
+},800);
+
+// finish
+setTimeout(()=>{
+
+milkStream.style.height = "0";
+milkStream.style.opacity = "0";
+
+tubeBEmpty.classList.add("hide-apparatus");
+tubeBMilk.classList.remove("hide-apparatus");
+
+cylinderMilk.classList.add("hide-apparatus");
+cylinderEmpty.classList.remove("hide-apparatus");
+
+cylinder.style.transform =
+"translate(0,3px) rotate(0deg) scale(1.9)";
+
+instruction.textContent =
+"Instruction : Milk transferred to Test Tube B.";
+
+console.log("now we reach to the end")
+
+f = 10;
+radio();
+
+
+
+},2200);
+
+});
+
+
+let currentTemp = 20;
+let targetTemp = 100;
+let timerStarted = false;
+let countdownInterval;
+
+function radio (){
+  if(f === 10){
+    console.log("function radio is running")
+
+    cylinderEmpty.style.visibility = "hidden"
+    milkA.style.visibility = "hidden"
+    milkB.style.visibility = "hidden"
+    cylinderEmpty.style.display = "block"
+    water_bath.style.display = "block"
+    clock.style.visibility = "visible"
+   timerDisplay13.style.visibility = "visible"
+     instruction.innerText = "Click on the ON button of Waterbath to on it"
+    
+     offSwitch3.addEventListener("click", () => {
+      if (f === 10) {
+        f = 11;
+        offSwitch3.style.visibility = "hidden";
+        onSwitch3.style.visibility = "visible";
+        pulse(onSwitch3);
+
+        actualTempDisplay3.style.visibility = "visible"
+        sampleTempDisplay3.style.visibility = "visible"
+
+          actualTempDisplay3.textContent = `${currentTemp}°C`;
+    sampleTempDisplay3.textContent = `${currentTemp}°C`;
+
+    instruction.innerText = "Click the ↑ button symbol to raise PV temperature to 100°C"
+    }
+     })
+
+
+     upOffSwitch3.addEventListener("click", () => {
+    if (f === 11 && currentTemp < targetTemp) {
+         console.log("upoff switch")
+        currentTemp  += 2;
+        instruction.innerText = "Again Click ↑ button to raise temperature to 100°C"
+        sampleTempDisplay3.textContent = `${currentTemp}°C`;
+        pulse(upOffSwitch3);
+
+        if (currentTemp === targetTemp && !timerStarted) {
+            f = 12;
+            timerStarted = true;
+            instruction.innerText = "Click on the Set button to set SV temperature to 100°C";
+            setOff3.addEventListener("click", () => {
+               pulse(setOff3)
+              console.log("set button active")
+            startHoldingTimer(5); // Start 2 min timer
+            f = 13;
+            // latex_beaker()
+              
+            },  { once: true })
+        }
+    }
+});
+  }else{console.log("f is not 10")}
+}
+
+function startHoldingTimer(minutes) {
+    let seconds = minutes * 60;
+    let currentTemp = 20; // Starting temperature
+    const targetTemp = 100;
+
+    
+    actualTempDisplay3.style.display = "block"; // Optional if you have a bath temp display
+   
+    // 🔥 Interval to increase bath temperature slowly
+  const tempInterval = setInterval(() => {
+  if (currentTemp < targetTemp) {
+    currentTemp += 2;
+    actualTempDisplay3.textContent = `${Math.round(currentTemp)}°C`;
+  } else {
+    clearInterval(tempInterval);
+    actualTempDisplay3.textContent = `${Math.round(targetTemp)}°C`;
+  }
+}, 400); //400  480 every 0.5s adjust as needed
+
+    // ⏲️ Countdown Timer
+    const countdownInterval = setInterval(() => {
+       timerDisplay13.style.visibility = "visible";
+        let min = Math.floor(seconds / 60);
+        let sec = seconds % 60;
+        // timerDisplay13.textContent = `Timer - ${min}:${sec < 10 ? "0" : ""}${sec}`;
+        seconds--;
+
+        if (seconds < 0 && currentTemp === targetTemp) {
+            clearInterval(countdownInterval);
+            clearInterval(tempInterval); // Stop temperature interval too
+            timerDisplay13.textContent = "05:00";
+            instruction.innerText = "Click on the tube A to put both tubes into water bath to heat both the sample tubes at 100°C for 5 minutes";
+            pulse(instruction); // your existing animation
+            f = 14;
+            
+        }
+    }, 100);  //100
+}
+
+function pulse(element) {
+    element.classList.add("pulse-effect");
+    setTimeout(() => {
+        element.classList.remove("pulse-effect");
+    }, 1000);
+}
+
+  tubeA.style.transition = "all 1s"
+  tubeB.style.transition = "all 1s"
+
+   tubeA.addEventListener("click", () => {
+    if(f === 14){
+    
+      tubeA.style.top = "-10vw"
+     setTimeout(() => {
+      tubeA.style.left = "43vw"
+      tubeA.style.zIndex = "400"
+         setTimeout(() => {
+          tubeA.style.height = "80%"
+          tubeA.style.width = "15%"
+            setTimeout(() => {
+                tubeA.style.top = "0vw"
+                  setTimeout(() => {
+                     tubeB.style.top = "-10vw"
+                      setTimeout(() => {
+                          tubeB.style.left = "46vw"
+      tubeB.style.zIndex = "400"
+                          setTimeout(() => {
+                             tubeB.style.height = "80%"
+          tubeB.style.width = "15%"
+                              setTimeout(() => {
+                                   tubeB.style.top = "0vw"
+                                   f = 15;
+                                            setTimeout(() => {
+                                              
+                                               startHoldingTimer2(1);   // 5
+                                               }, 1000);
+                                      }, 1000);
+                                            }, 1000);
+                                                  }, 1000);
+                                                        }, 1000);
+               }, 1000);
+            }, 1000);
+       }, 1000);
+    }else{console.log("the value is not 14")}
+   })
+
+   function startHoldingTimer2(minutes) {
+  if(f === 15){
+    let seconds2 = minutes * 60;
+    let currentTemp2 = 20; // Starting temperature
+    const targetTemp2 = 100;
+
+    
+    actualTempDisplay3.style.display = "block"; // Optional if you have a bath temp display
+   
+    // 🔥 Interval to increase bath temperature slowly
+    const tempInterval = setInterval(() => {
+        if (currentTemp2 < targetTemp2) {
+            currentTemp2 += 2; // Increase temp slowly
+          
+       
+        } else {
+            clearInterval(tempInterval);
+           
+        }
+    } , 400  ); //  480 every 0.5s adjust as needed
+
+    // ⏲️ Countdown Timer
+    const countdownInterval = setInterval(() => {
+       timerDisplay13.style.visibility = "visible";
+        let min = Math.floor(seconds2 / 60);
+        let sec = seconds2 % 60;
+        timerDisplay13.textContent = `${min.toString().padStart(2, "0")}:${sec.toString().padStart(2, "0")}`;
+          instruction.innerText = "⏳ Wait for 5 minutes to heat both tubes at 100°C";
+        seconds2--;
+
+        if (seconds2 < 0) {
+            clearInterval(countdownInterval);
+            clearInterval(tempInterval); // Stop temperature interval too
+            timerDisplay13.textContent = "00:00";
+            instruction.innerText = "✅ Tubes are heated. Now click on Tube A to gently remove both tubes into stand at room temperature for 5 minutes";
+              f = 16;
+           bpradio();
+           
+            
+        }
+    }, 100);  //100
+  }else{console.log("f is not 15")}
+}
+
+
+function bpradio(){
+    if(f === 16){
+tubeA.addEventListener("click", () => {
+  
+      console.log("the value of f is", f)
+       tubeA.style.top = "-10vw"
+       tubeA.style.height = "90%"
+       tubeA.style.width = "18%"
+       stand_front.style.zIndex = "40"
+        setTimeout(() => {
+           tubeA.style.left = "5.8vw";
+                  setTimeout(() => {
+                    tubeA.style.top = "0vw"
+                     setTimeout(() => {
+                       tubeB.style.top = "-10vw"
+       tubeB.style.height = "90%"
+       tubeB.style.width = "18%"
+                       setTimeout(() => {
+                             tubeB.style.left = "10vw";
+                         setTimeout(() => {
+                           tubeB.style.top = "0vw"
+                           setTimeout(() => {
+                          
+                            water_bath.style.display = "none"
+                            iodine_bottle.style.visibility = "visible"
+                            iodine_bottle_cap.style.visibility = "visible"
+                             
+                             instruction.innerText = "Wait for 5 minutes to cool tubes at room temperature for 5 minutes"
+                              startHoldingTimer3(5);
+                             }, 1000); 
+                              }, 1000); 
+                               }, 1000); 
+                                }, 1000); 
+
+                    }, 1000); 
+          }, 1000); 
+   
+  })
+   }else{console.log("f is not 16", f)}
+}
+
+
+ function startHoldingTimer3(minutes) {
+  if(f === 16){
+    let seconds2 = minutes * 60;
+    let currentTemp2 = 20; // Starting temperature
+    const targetTemp2 = 100;
+
+    
+    actualTempDisplay3.style.display = "block"; // Optional if you have a bath temp display
+   
+    // 🔥 Interval to increase bath temperature slowly
+    const tempInterval = setInterval(() => {
+        if (currentTemp2 < targetTemp2) {
+            currentTemp2 += 2; // Increase temp slowly
+          
+       
+        } else {
+            clearInterval(tempInterval);
+           
+        }
+    } , 400  ); //  480 every 0.5s adjust as needed
+
+    // ⏲️ Countdown Timer
+    const countdownInterval = setInterval(() => {
+       timerDisplay13.style.visibility = "visible";
+        let min = Math.floor(seconds2 / 60);
+        let sec = seconds2 % 60;
+        timerDisplay13.textContent = `${min.toString().padStart(2, "0")}:${sec.toString().padStart(2, "0")}`;
+          instruction.innerText = "⏳ Wait for 5 minutes to cool both tubes at room temperature";
+        seconds2--;
+
+        if (seconds2 < 0) {
+            clearInterval(countdownInterval);
+            clearInterval(tempInterval); // Stop temperature interval too
+            timerDisplay13.textContent = "";
+            instruction.innerText = "Click on the iodine bottle to put iodine drops to each tubes";
+              f = 17;
+           bpradio1();
+           
+            
+        }
+    }, 100);  //100
+  }else{console.log("f is not 15")}
+}
+
+
+function bpradio1(){
+  if(f === 17){
+    f = 18;
+     iodine_bottle.addEventListener("click", () => {
+           iodine_bottle_cap.style.top = "8vw"
+             setTimeout(() => {
+              iodine_bottle_cap.style.left = "26.4vw"
+                  setTimeout(() => {
+                     iodine_bottle_cap.style.top = "23vw"
+                      setTimeout(() => {
+                         water_drop.style.visibility = "visible"
+                         tubeA.style.transition = "all 0s"
+                             setTimeout(() => {
+                         water_drop.style.top = "80%"
+                          setTimeout(() => {
+                         test_tube_blue.style.visibility = "visible"
+                         tubeA.style.visibility = "hidden"
+                         water_drop.style.visibility = "hidden"
+                            setTimeout(() => {
+                              iodine_bottle_cap.style.left = "31vw"
+                                setTimeout(() => {
+                                  water_drop1.style.visibility = "visible"
+                                    setTimeout(() => {
+                                       water_drop1.style.top = "80%"
+                                       water_drop1.style.visibility = "hidden"
+                                         setTimeout(() => {
+                                          iodine_bottle_cap.style.left = "61%"
+                                            setTimeout(() => {
+                                              iodine_bottle_cap.style.top = "63.5%"
+                                                setTimeout(() => {
+                                                  observation_table_detergent.style.visibility = "visible"
+                                                  inference_box.style.visibility = "visible"
+                                                  instruction.innerText = "See the observation table and inference for the experiment"
+                                                  }, 1000);
+                                               }, 1000);
+                                                }, 1000);
+                              }, 1000);
+                               }, 1000);
+                                }, 1000);         
+                          }, 1000);
+                          }, 1000);
+                         
+                        }, 1000);
+                     }, 1000);  
+             }, 1000);  
+     })
+  }else{console.log("no run here")}
+}
+
+});
+
+
+/* RESET EXPERIMENT */
+document.getElementById("resetBtn").onclick = function(){
+
+  /* reload page (simple & best) */
+  location.reload();
+
+};
+
+
+/* NEXT EXPERIMENT */
+document.getElementById("nextExpBtn").onclick = function(){
+
+  window.location.href = "8B.html";
+
+};
+
+
+
+</script>
+
+</body>
+</html>

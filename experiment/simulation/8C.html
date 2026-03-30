@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dairy Technology Virtual Lab</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI, sans-serif;
+}
+
+html,body{
+width:100%;
+height:100%;
+overflow:hidden;
+}
+
+#lab{
+position:relative;
+width:100vw;
+height:100vh;
+overflow:hidden;
+}
+
+/* BACKGROUND */
+
+#bg{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+object-fit:cover;
+z-index:0;
+}
+
+/* TITLE */
+
+#labTitle{
+position:absolute;
+top:40%;
+left:47%;
+transform:translateX(-50%);
+color:white;
+font-size:3vw;
+font-weight:bold;
+text-shadow:0 0 8px black;
+z-index:5;
+}
+
+/* INSTRUCTION */
+
+#instruction{
+position:absolute;
+top:0;
+width:100%;
+padding:12px;
+background:rgba(0,0,0,0.6);
+color:white;
+text-align:center;
+font-size:18px;
+z-index:20;
+}
+
+/* APPARATUS ROW */
+
+.lab-row{
+position:absolute;
+bottom:6vh;
+width:100%;
+display:flex;
+justify-content:center;
+align-items:flex-end;
+gap:1.5vw;
+z-index:10;
+}
+
+/* APPARATUS */
+
+.apparatus{
+width:9vw;
+max-width:140px;
+height:24vh;
+display:flex;
+align-items:flex-end;
+justify-content:center;
+position:relative;
+cursor:pointer;
+}
+
+.apparatus img{
+max-width:100%;
+max-height:100%;
+object-fit:contain;
+display:block;
+}
+
+/* TOOLTIP */
+
+.apparatus::after,
+.tube::after,
+#pipette::after{
+content:attr(data-name);
+position:absolute;
+top:110%;
+left:50%;
+transform:translateX(-50%);
+background:#111;
+color:white;
+padding:5px 10px;
+font-size:12px;
+border-radius:6px;
+opacity:0;
+transition:0.2s;
+white-space:nowrap;
+pointer-events:none;
+z-index:500;
+}
+
+.apparatus:hover::after,
+.tube:hover::after,
+#pipette:hover::after{
+opacity:1;
+}
+
+/* TEST TUBE STAND */
+
+.stand-box{
+width:16vw;
+max-width:220px;
+height:24vh;
+position:relative;
+z-index: 0;
+}
+
+.stand{
+position:absolute;
+bottom:0;
+width:100%;
+}
+
+.front{
+z-index:15;
+bottom:70px;
+left:-7px;
+}
+
+/* TEST TUBES */
+
+.tube{
+position:absolute;
+width:20px;
+bottom:18px;
+cursor:pointer;
+z-index:9;
+}
+
+.tubeA{ left:40%; }
+.tubeB{ left:55%; }
+
+.tube img{
+width:100%;
+}
+
+/* HEIGHT */
+
+#milkA img,
+#milkB img{
+height:20vh;
+}
+
+#chloroformBottle img,
+#methyleneBottle img{
+height:21vh;
+}
+
+/* CAPS */
+
+.chloroCap{
+position:absolute;
+top:-19px;
+left:50%;
+transform:translateX(-50%);
+width:32%;
+}
+
+.methyleneCap{
+position:absolute;
+top:-15px;
+left:50%;
+transform:translateX(-50%);
+width:32%;
+z-index:-2;
+transition:all 0.8s ease;
+}
+
+/* PIPETTE */
+
+#pipette{
+position:absolute;
+bottom:8vh;
+left:8vw;
+width:7vw;
+max-width:110px;
+transform:rotate(-90deg);
+transition:all 1.2s ease;
+z-index:100;
+cursor:pointer;
+}
+
+#pipette img{
+width:40%;
+height:250px;
+filter:drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+}
+
+/* NEXT BUTTON */
+
+#nextBtn{
+position:absolute;
+bottom:20px;
+right:20px;
+padding:10px 20px;
+font-size:16px;
+border:none;
+border-radius:8px;
+background:#235d3f;
+color:white;
+cursor:pointer;
+z-index:30;
+display:none;
+}
+
+/* DROP */
+
+#milkDrop{
+position:absolute;
+width:8px;
+height:12px;
+background:white;
+border-radius:50%;
+left:22.9vw;
+bottom:40vh;
+opacity:0;
+z-index:120;
+}
+
+#centrifuge_close_lid{
+  position: absolute;
+    left: 59.7%;
+    top: 70%;
+    height: 10%;
+    width: 10.9%;
+    z-index: 29;
+}
+
+
+#centrifuge_down_filling{
+  position: absolute;
+     left: 60%;
+    top: 76%;
+    height: 19%;
+    width: 10%;
+    z-index: 22;
+}
+
+
+#centrifuge_mid_filling{
+  position: absolute;
+   left: 60.76%;
+    top: 73.4%;
+    height: 3.5%;
+    width: 9.3%;
+    z-index: 20;
+}
+
+#centrifuge_upper_open_lid{
+    position: absolute;
+   left: 60.2%;
+    top: 63.59%;
+    height: 10%;
+    width: 10%;
+    visibility: hidden;
+    z-index: 18;
+}
+
+
+#ADD{
+    position: absolute;
+     left: 67.66%;
+    top: 83.7%;
+    height: 1.7%;
+    width: 0.8%;
+    z-index: 23;
+}
+
+#SUB{
+    position: absolute;
+     left: 67.66%;
+    top: 85.4%;
+    height: 1.7%;
+    width: 0.8%;
+    z-index: 23;
+}
+
+#Off_On_button{
+     position: absolute;
+     left: 60.8%;
+    top: 84%;
+    height: 3%;
+    width: 1%;
+    z-index: 23;
+}
+
+#On_Button{
+     position: absolute;
+     left: 60.8%;
+    top: 84%;
+    height: 3%;
+    width: 1%;
+    z-index: 23;
+    visibility: hidden;
+}
+
+#SET{
+   color: rgb(255, 255, 255);
+background-color: rgb(150, 43, 226);
+font-weight: bold;
+border: 0.2vw solid black;
+border-radius: 0.2vw;
+font-size: 0.5vw;
+     position: absolute;
+     left: 61.5%;
+    top: 90.6%;
+    height: 2.1%;
+    width: 1.4%;
+    z-index: 23;
+}
+
+#MEN{
+   color: rgb(255, 255, 255);
+background-color: rgb(17, 40, 246);
+font-weight: bold;
+border: 0.2vw solid black;
+border-radius: 0.2vw;
+font-size: 0.5vw;
+     position: absolute;
+     left: 61.5%;
+    top: 88%;
+    height: 2.1%;
+    width: 1.4%;
+    z-index: 23;
+}
+
+
+#Close_button{
+   color: rgb(255, 255, 255);
+background-color: rgb(17, 40, 246);
+font-weight: bold;
+border: 0.2vw solid black;
+border-radius: 0.2vw;
+font-size: 0.5vw;
+     position: absolute;
+     left: 63.5%;
+    top: 89.3%;
+    height: 2.1%;
+    width: 3%;
+    z-index: 23;
+}
+
+
+#Open_button{
+   color: rgb(255, 255, 255);
+background-color: rgb(17, 40, 246);
+font-weight: bold;
+border: 0.2vw solid black;
+border-radius: 0.2vw;
+font-size: 0.5vw;
+     position: absolute;
+     left: 63.5%;
+    top: 89.3%;
+    height: 2.1%;
+    width: 3%;
+    visibility: hidden;
+    z-index: 23;
+}
+
+#RUN{
+   color: rgb(255, 255, 255);
+background-color: rgb(0, 107, 77);
+font-weight: bold;
+border: 0.2vw solid black;
+border-radius: 0.2vw;
+font-size: 0.5vw;
+     position: absolute;
+     left: 66.9%;
+    top: 89.3%;
+    height: 2.1%;
+    width: 1.4%;
+    z-index: 23;
+}
+
+#rpmDisplay {
+  position: absolute;
+  font-size: 0.8vw;
+  font-weight: 500;
+  color: #37ed09;
+  z-index: 50;
+  opacity: 100%;
+   bottom: 14.2%;
+  left: 65%;
+  visibility: hidden;
+}
+
+#rpmLabel {
+  position: absolute;
+  font-size: 0.7vw;
+  font-weight: 500;
+  color: #5145d9;
+  z-index: 50;
+  opacity: 100%;
+   bottom: 14.35%;
+  left: 63%;
+  visibility: hidden;
+}
+
+#timeLabel {
+  position: absolute;
+  font-size: 0.7vw;
+  font-weight: 500;
+  color: #e00f0f;
+  z-index: 50;
+  opacity: 100%;
+   bottom: 13%;
+  left: 63%;
+  visibility: hidden;
+}
+
+#stand_front {
+  position: absolute;
+  z-index:15;
+bottom: 15.3%;
+width: 14.1%;
+left: 16.2%;
+  visibility: visible;
+  z-index: 20;
+}
+
+#timeDisplay {
+  position: absolute;
+  font-size: 0.7vw;
+  font-weight: 500;
+  color: #37ed09;
+  z-index: 50;
+  opacity: 100%;
+   bottom: 13%;
+  left: 65%;
+  visibility: hidden;
+}
+
+
+#centrifuge_test_tube{
+   position: absolute;
+     left: 43%;
+    top: 75%;
+    height: 17.2%;
+    width: 1.25%;
+    z-index: 11;
+    transition: all 1s;
+}
+
+#centrifuge_test_tube_b{
+   position: absolute;
+     left: 45%;
+    top: 75%;
+    height: 17.2%;
+    width: 1.25%;
+    z-index: 11;
+    transition: all 1s
+}
+
+#test_tube_B{
+   position: absolute;
+     left: 66.3%;
+    top: 75%;
+    height: 10%;
+    width: 1.2%;
+    z-index: 21;
+    rotate: -17deg;
+    visibility: hidden;
+    transition: all 1s
+}
+
+#test_tube_A{
+   position: absolute;
+     left: 63.3%;
+    top: 75%;
+    height: 10%;
+    width: 1.2%;
+    z-index: 21;
+    rotate: 17deg;
+    visibility: hidden;
+    transition: all 1s
+}
+
+
+#stp21{
+  visibility: hidden;
+}
+
+#observation_table_detergent{
+  visibility: hidden;
+}
+#inference_box{
+  visibility: hidden;
+}
+.table-container_mbrt {
+  position: absolute;
+  top: 8vw;
+  left: 48%;
+  transform: translateX(-50%);
+
+  width: 90vw;
+  max-width: 68.75vw;
+
+  background: white;
+  padding: 0.94vw;
+
+  border: 0.19vw solid black;
+  border-radius: 0.5vw;
+
+  z-index: 10;
+}
+
+/* table styles ONLY for MBRT */
+.table-container_mbrt table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+/* table cells */
+.table-container_mbrt th,
+.table-container_mbrt td {
+  border: 0.125vw solid black;
+  padding: 0.63vw;
+  font-size: 1vw;
+}
+
+/* table header */
+.table-container_mbrt th {
+  background-color: black;
+  color: white;
+  font-size: 1.05vw;
+}
+
+/* visible rows/cells */
+.table-container_mbrt .hidden {
+  visibility: visible;
+}
+
+
+
+.dropAnimation{
+animation:dropMilk 0.5s ease forwards;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); border-radius: 50%; }
+  50% { transform: scale(0.9); border-radius: 30%; }
+  100% { transform: scale(1); border-radius: 50%; }
+}
+
+
+
+
+.pulse-effect {
+  animation: pulse 0.5s ease-in-out;
+}
+
+.vortex {
+  animation: vortexMix 0.3s ease-in-out infinite;
+}
+
+@keyframes vortexMix {
+  0%   { transform: rotate(0) translateX(0); }
+  50%  { transform: rotate(2deg) translateX(4px); }
+  100% { transform: rotate(-2deg) translateX(-4px); }
+}
+
+@keyframes dropMilk{
+0%{bottom:30vh;opacity:1;}
+100%{bottom:24vh;opacity:0;}
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="lab">
+ <div id = stp21>
+     <img id="centrifuge_close_lid" src="images/8A/centrifuge close lid.png" alt="On Switch" />
+       <img id="centrifuge_down_filling" src="images/8A/centrifuge down filling.png" alt="On Switch" />
+
+       <img id="centrifuge_mid_filling" src="images/8C/centrifuge mid filling.png" alt="On Switch" />
+       <img id="centrifuge_upper_open_lid" src="images/8C/centrifuge upper lid open.png" alt="On Switch" />
+
+     <img id="Off_On_button" src="images/8C/OFF BUTTON.png" alt="Off On Button">
+  <img id="On_Button" src="images/8C/on_button.png" alt="On Button">
+
+  <img id = "centrifuge_test_tube" src = "Images/8C/test-tube-c.png">
+    <img id = "centrifuge_test_tube_b" src = "Images/8C/test-tube-c.png">
+ 
+    <img id = "test_tube_A" src="Images/8C/test-tube-A.png" >
+        <img id = "test_tube_B" src="Images/8C/test-tube-B.png" >
+
+    
+  <img id = "stand_front" src="Images/8C/test-tube-stand-front.png" >
+      <img id = "ADD" src="images/8C/ADD.png" alt = "helloworld" /> 
+ <img id = "SUB" src="images/8C/SUB.png" alt = "helloworld" /> 
+ <div id = "SET" > SET </div>
+ <div id = "MEN" > MEN </div>  
+
+ <div id = "Close_button" > OPEN LID </div>
+ <div id = "Open_button" > CLOSE LID</div>
+ <div id = "RUN" > RUN </div>
+
+
+  <div id="rpmLabel" >RPM:</div>
+    <div id="rpmDisplay" >0000</div>
+
+
+
+    <div id="timeLabel" >Time:</div>
+    <div id="timeDisplay">00:00</div>
+
+    <div class="table-container_mbrt" id="observation_table_detergent">
+
+  <h2 style="text-align:center;">Observation Table</h2>
+
+  <table>
+    <tr>
+      <th>Sample</th>
+      <th>Color Observation</th>
+      <th>Detergent Adulteration</th>
+    </tr>
+
+    <tr>
+      <td>A</td>
+      <td>More intense blue color in lower layer</td>
+      <td>Yes</td>
+    </tr>
+
+    <tr>
+      <td>B</td>
+      <td>More intense blue color in upper layer</td>
+      <td>No</td>
+    </tr>
+  </table>
+ 
+<!-- Inference Section -->
+<div class="table-container_mbrt" id="inference_box" style="top: 21vw;">
+
+  <h2 style="text-align:center;">Inference</h2>
+
+  <ul style="font-size:1vw; padding: 1vw 2vw; text-align:left; list-style-type: disc;">
+    <li>Relatively more intense blue color in lower layer indicates presence of detergent in milk.</li>
+    <li>Relatively more intense blue color in upper layer indicates absence of detergent in milk.</li>
+  </ul>
+  <div style="display:flex; justify-content:center; gap:20px; margin-top:10px;">
+
+  <button id="resetBtn" style="padding:10px 20px; font-size:16px; border:none; border-radius:8px; background:#b23a3a; color:white; cursor:pointer;">
+    🔄 Reset Experiment
+  </button>
+  </div>
+</div>
+
+</div>
+
+  </div>
+<img src="Images/8A/bgImage.png" id="bg">
+
+<div id="labTitle">Dairy Technology Lab</div>
+
+<div id="instruction">
+Instruction:- Observe the apparatus setup
+</div>
+
+<div class="lab-row">
+
+<div class="apparatus stand-box" data-name="Test Tube Stand">
+
+<img src="Images/8C/test-tube-stand-back.png" class="stand">
+
+<div class="tube tubeA" data-name="Test Tube A">
+<img id="tubeAImg" src="Images/8C/test-tube.png">
+</div>
+
+<div class="tube tubeB" data-name="Test Tube B">
+<img id="tubeBImg" src="Images/8C/test-tube.png">
+</div>
+
+
+
+</div>
+
+<div class="apparatus" id="milkA" data-name="Milk Sample A">
+<img src="Images/8C/milk.png">
+</div>
+
+<div class="apparatus" id="milkB" data-name="Milk Sample B">
+<img src="Images/8C/MilkB.png">
+</div>
+
+<div class="apparatus" id="chloroformBottle" data-name="Chloroform Bottle">
+<img src="Images/8C/chloroform-bottle.png">
+<img src="Images/8C/chloroform-cap.png" class="chloroCap">
+</div>
+
+<div class="apparatus" id="methyleneBottle" data-name="Methylene Blue Bottle">
+<img src="Images/8C/methylene-blue.png">
+<img src="Images/8C/methylene-cap.png" class="methyleneCap">
+</div>
+
+<div class="apparatus" id="centrifuge" data-name="Centrifuge">
+<img src="Images/8C/centrifuge_familiar.png"  id = "centrifuge_familiar">
+</div>
+
+</div>
+
+<!-- PIPETTE -->
+
+<div id="pipette" data-name="Pipette">
+<img id="pipetteImg" src="Images/8C/pipette.png">
+</div>
+
+<div id="milkDrop"></div>
+
+<button id="nextBtn">Next ➜</button>
+
+</div>
+<script>
+
+const nextBtn=document.getElementById("nextBtn");
+const instruction=document.getElementById("instruction");
+const pipette=document.getElementById("pipette");
+const pipetteImg=document.getElementById("pipetteImg");
+const milkDrop=document.getElementById("milkDrop");
+const tubeA=document.getElementById("tubeAImg");
+const tubeB=document.getElementById("tubeBImg");
+
+const test_tube_A =document.getElementById("test_tube_A");
+const test_tube_B =document.getElementById("test_tube_B");
+
+const tubeAimgdiv = document.querySelector(".tubeA"); 
+const centrifuge_test_tube = document.getElementById("centrifuge_test_tube"); 
+const centrifuge_test_tube_b = document.getElementById("centrifuge_test_tube_b"); 
+
+const methyleneBottle=document.getElementById("methyleneBottle");
+const methyleneCap=document.querySelector(".methyleneCap");
+const chloroCap=document.querySelector(".chloroCap");
+
+const stand_front  = document.getElementById("stand_front");
+
+const openButton = document.getElementById("Open_button");
+const closeButton = document.getElementById("Close_button");
+
+const centrifugeUpperLidOpen = document.getElementById("centrifuge_upper_open_lid");
+const centrifugeCloseLid = document.getElementById("centrifuge_close_lid");
+const centrifugeTopFilling = document.getElementById("centrifuge_top_filling");
+const centrifugeDownFilling = document.getElementById("centrifuge_down_filling");
+
+const offOnButton = document.getElementById("Off_On_button");
+const onButton = document.getElementById("On_Button");
+
+
+const centrifuge_familiar = document.getElementById("centrifuge_familiar");
+
+const timeDisplay = document.getElementById("timeDisplay");
+const rpmDisplay = document.getElementById("rpmDisplay");
+const rpmLabel = document.getElementById("rpmLabel");
+const timeLabel = document.getElementById("timeLabel");
+
+const observation_table_detergent = document.getElementById("observation_table_detergent");
+const inference_box = document.getElementById("inference_box");
+
+let step=-1;
+let methyleneStep=0;
+
+/* SHOW FIRST NEXT */
+
+setTimeout(()=>{
+nextBtn.style.display="block";
+},2000);
+
+/* NEXT BUTTON */
+
+nextBtn.onclick=function(){
+
+if(step===-1){
+instruction.innerText="Instruction:- Click pipette to take milk from Sample A";
+nextBtn.style.display="none";
+step=0;
+}
+
+else if(step===1){
+instruction.innerText="Instruction:- Click pipette to add milk to Test Tube A";
+nextBtn.style.display="none";
+}
+
+else if(step===2){
+instruction.innerText="Instruction:- Click pipette to take milk from Sample B";
+nextBtn.style.display="none";
+}
+
+else if(step===3){
+instruction.innerText="Instruction:- Click pipette to add milk to Test Tube B";
+nextBtn.style.display="none";
+}
+
+else if(step===4){
+instruction.innerText="Instruction:- Click Methylene Blue bottle";
+nextBtn.style.display="none";
+step=5;
+}
+
+else if(step===6){
+instruction.innerText="Instruction:- Click chloroform bottle cap to open";
+nextBtn.style.display="none";
+}
+
+else if(step===7){
+instruction.innerText="Instruction:- Click pipette to take chloroform from bottle";
+nextBtn.style.display="none";
+step=8;
+}
+else if(step===9){
+instruction.innerText="Instruction:- Click pipette to add chloroform to both Test Tubes";
+nextBtn.style.display="none";
+step=10;
+}
+
+  else if (step === 11) {
+    instruction.innerText = "Placing test tubes in centrifuge...";
+    stand_front.style.left = "37.3%"
+    // Hide unused apparatus
+    milkA.style.display = "none";
+    milkB.style.display = "none";
+    chloroformBottle.style.display = "none";
+    methyleneBottle.style.display = "none";
+    pipette.style.display = "none";
+
+    // Show centrifuge familiar image
+   
+    
+
+    nextBtn.style.display = "none";
+    // Animate lid close
+    stp21.style.visibility = "visible";
+
+    // Animate lid downward open
+    centrifuge_familiar.style.display = "none"
+
+    step = 12;
+    tubeA.style.visibility = "hidden"
+    tubeB.style.visibility = "hidden"
+    roboda();
+    
+  }
+}
+
+
+
+
+/* PIPETTE CLICK */
+
+pipette.onclick=function(){
+
+/* TAKE MILK A */
+
+if(step===0){
+
+instruction.innerText="Taking milk from Milk Sample A";
+
+pipette.style.left="36vw";
+pipette.style.bottom="40vh";
+pipette.style.transform="rotate(-20deg)";
+
+setTimeout(()=>{
+pipette.style.bottom="16vh";
+pipette.style.transform="rotate(0deg)";
+},1200);  // 1200
+
+setTimeout(()=>{
+pipetteImg.src="Images/8B/pipette-milk-1ml.png";
+},2200);  // 2200
+
+setTimeout(()=>{
+pipette.style.bottom="39vh";
+},3000);  // 3000
+
+setTimeout(()=>{
+pipette.style.left="37vw";
+pipette.style.bottom="45vh";
+},3600);  //3600
+
+setTimeout(()=>{
+instruction.innerText="Click Next";
+nextBtn.style.display="block";
+step=1;
+},4200);  // 4200
+
+}
+
+/* ADD MILK A */
+
+else if(step===1){
+
+instruction.innerText="Adding milk to Test Tube A";
+
+pipette.style.left="22vw";
+pipette.style.bottom="40vh";
+
+setTimeout(()=>{
+pipette.style.bottom="28vh";
+},1200);
+
+setTimeout(()=>{
+
+milkDrop.style.left="23vw";  
+milkDrop.style.bottom="30vh";
+milkDrop.style.background="white";
+
+milkDrop.classList.remove("dropAnimation");
+void milkDrop.offsetWidth;
+milkDrop.classList.add("dropAnimation");
+
+},2000);  // 2000
+
+setTimeout(()=>{
+tubeA.src="Images/8B/test-tube-1ml-milk.png";
+},2300);  //2300
+
+setTimeout(()=>{
+pipetteImg.src="Images/8C/pipette.png";
+}, 2600);   // 2600
+
+setTimeout(()=>{
+pipette.style.left="8vw";
+pipette.style.bottom="8vh";
+pipette.style.transform="rotate(-90deg)";
+}, 3200);  // 3200
+
+setTimeout(()=>{
+instruction.innerText="Click Next";
+nextBtn.style.display="block";
+step=2;
+}, 3800);  // 3800
+
+}
+
+/* TAKE MILK B */
+
+else if(step===2){
+
+instruction.innerText="Taking milk from Milk Sample B";
+
+pipette.style.left="45vw";
+pipette.style.bottom="40vh";
+pipette.style.transform="rotate(-20deg)";
+
+setTimeout(()=>{
+pipette.style.bottom="16vh";
+pipette.style.transform="rotate(0deg)";
+}, 1200);  // 1200
+
+setTimeout(()=>{
+pipetteImg.src="Images/8B/pipette-milk-1ml.png";
+}, 2200);   // 2200
+
+setTimeout(()=>{
+pipette.style.bottom="40vh";
+}, 3000);  // 3000
+
+setTimeout(()=>{
+pipette.style.left="49vw";
+pipette.style.bottom="45vh";
+}, 3600);   // 3600
+
+setTimeout(()=>{
+instruction.innerText="Click Next";
+nextBtn.style.display="block";
+step=3;
+}, 4200);  // 4200
+
+}
+
+/* ADD MILK B */
+
+else if(step===3){
+
+instruction.innerText="Adding milk to Test Tube B";
+
+pipette.style.left="23.5vw";
+pipette.style.bottom="40vh";
+
+setTimeout(()=>{
+pipette.style.bottom="26vh";
+},1200);
+
+setTimeout(()=>{
+
+milkDrop.style.left="25vw";
+milkDrop.style.bottom="30vh";
+milkDrop.style.background="white";
+
+milkDrop.classList.remove("dropAnimation");
+void milkDrop.offsetWidth;
+milkDrop.classList.add("dropAnimation");
+
+}, 2000); // 2000
+
+setTimeout(()=>{
+tubeB.src="Images/8B/test-tube-1ml-milk.png";
+}, 2300);  // 2300
+
+setTimeout(()=>{
+pipetteImg.src="Images/8C/pipette.png";
+}, 2600); // 2600
+
+setTimeout(()=>{
+pipette.style.left="8vw";
+pipette.style.bottom="8vh";
+pipette.style.transform="rotate(-90deg)";
+}, 3200);   // 3200
+
+setTimeout(()=>{
+instruction.innerText="Click Next";
+nextBtn.style.display="block";
+step=4;
+}, 3800);   //3800
+
+}
+
+/* TAKE CHLOROFORM */
+else if(step===8){
+
+instruction.innerText="Taking chloroform from bottle";
+
+/* move right */
+
+pipette.style.left="56.5vw";
+pipette.style.bottom="30vh";
+pipette.style.transform="rotate(-20deg)";
+
+/* move down */
+/* move down deeper */
+setTimeout(()=>{
+pipette.style.bottom="17vh";
+pipette.style.transform="rotate(0deg)";
+},1200);
+
+setTimeout(()=>{
+pipette.style.bottom="15vh";
+},1700);
+
+setTimeout(()=>{
+pipette.style.bottom="17vh";  // 👈 thoda upar wapas (liquid suck effect)
+},2200);
+/* change pipette image */
+
+setTimeout(()=>{
+pipetteImg.src="Images/8C/pippete-chloroform.png";
+instruction.innerText="Chloroform taken in pipette";
+}, 2200);  // 2200
+
+/* show next */
+
+setTimeout(()=>{
+instruction.innerText="Click Next";
+nextBtn.style.display="block";
+step=9;
+}, 3200);   // 3200
+
+}
+/* ADD CHLOROFORM TO TUBES */
+
+else if(step===10){
+
+instruction.innerText="Adding chloroform to Test Tube A";
+
+/* move near tube A */
+
+pipette.style.left="22vw";
+pipette.style.bottom="40vh";
+pipette.style.transform="rotate(-20deg)";
+
+setTimeout(()=>{
+pipette.style.bottom="27.5vh";
+pipette.style.transform="rotate(0deg)";
+},1200);
+
+/* drop animation A */
+
+setTimeout(()=>{
+
+milkDrop.style.left="23vw";
+milkDrop.style.bottom="30vh";
+milkDrop.style.background="#d8d8d8";
+
+milkDrop.classList.remove("dropAnimation");
+void milkDrop.offsetWidth;
+milkDrop.classList.add("dropAnimation");
+
+},2000);
+
+/* tube A change */
+
+setTimeout(()=>{
+tubeA.src="Images/8C/test-tube-c.png";
+pipetteImg.src="Images/8C/pippete-chloroform.png";
+},2300);
+
+/* move to tube B */
+
+setTimeout(()=>{
+instruction.innerText="Adding chloroform to Test Tube B";
+pipette.style.left="23.5vw";
+pipette.style.bottom="40vh";
+pipette.style.transform="rotate(-20deg)";
+}, 0);  // 3000
+
+setTimeout(()=>{
+pipette.style.bottom="28vh";
+pipette.style.transform="rotate(0deg)";
+},0);   // 4200
+
+/* drop animation B */
+
+setTimeout(()=>{
+
+milkDrop.style.left="25vw";
+milkDrop.style.bottom="30vh";
+milkDrop.style.background="#d8d8d8";
+
+milkDrop.classList.remove("dropAnimation");
+void milkDrop.offsetWidth;
+milkDrop.classList.add("dropAnimation");
+
+}, 5000);   //5000
+
+/* tube B change */
+
+setTimeout(()=>{
+tubeB.src="Images/8C/test-tube-c.png";
+pipetteImg.src="Images/8B/pipette.png";
+}, 5300);   // 5300
+
+/* return pipette */
+
+setTimeout(()=>{
+pipette.style.left="8vw";
+pipette.style.bottom="8vh";
+pipette.style.transform="rotate(-90deg)";
+}, 6000);    // 6000
+
+setTimeout(()=>{
+instruction.innerText="Chloroform added successfully. Click next..";
+nextBtn.style.display="block";
+step=11;
+}, 6800);  // 6800
+
+}
+}
+/* METHYLENE BLUE */
+
+methyleneBottle.onclick=function(){
+
+if(step===5 && methyleneStep===0){
+
+instruction.innerText="Opening Methylene Blue Bottle";
+
+methyleneCap.style.top="-120px";
+
+setTimeout(()=>{
+instruction.innerText="Adding Methylene Blue to Test Tube A";
+methyleneCap.style.left="-41vw";
+methyleneCap.style.top="-150px";
+},1200);
+
+setTimeout(()=>{
+methyleneCap.style.top="-150px";
+},2200);
+
+setTimeout(()=>{
+
+milkDrop.style.left="23vw";
+milkDrop.style.bottom="20vh";
+milkDrop.style.background="#1e90ff";
+
+milkDrop.classList.remove("dropAnimation");
+void milkDrop.offsetWidth;
+milkDrop.classList.add("dropAnimation");
+
+}, 3000); // 3000
+setTimeout(()=>{
+tubeA.src="Images/8C/test-tube-methylene.png"; // 👈 new image
+}, 3300);
+
+setTimeout(()=>{
+instruction.innerText="Adding Methylene Blue to Test Tube B";
+methyleneCap.style.left="-39vw";
+methyleneCap.style.top="-150px";
+}, 4200);  // 4200
+
+setTimeout(()=>{
+methyleneCap.style.top="-150px";
+}, 5200);  // 5200
+
+setTimeout(()=>{
+
+milkDrop.style.left="25vw";
+milkDrop.style.bottom="20vh";
+milkDrop.style.background="#1e90ff";
+
+
+milkDrop.classList.remove("dropAnimation");
+void milkDrop.offsetWidth;
+milkDrop.classList.add("dropAnimation");
+
+}, 6000);   // 6000
+
+
+setTimeout(()=>{
+tubeB.src="Images/8C/test-tube-methylene.png";
+}, 6300);
+
+setTimeout(()=>{
+instruction.innerText="Click cap to close bottle";
+methyleneStep=1;
+}, 6800);  // 6800
+
+}
+
+/* CLOSE CAP */
+
+else if(methyleneStep===1){
+
+instruction.innerText="Closing Methylene Blue Bottle";
+
+methyleneCap.style.left="50%";
+methyleneCap.style.top="-120px";
+
+setTimeout(()=>{
+methyleneCap.style.top="-15px";
+},1000);
+
+setTimeout(()=>{
+instruction.innerText="Click Next";
+nextBtn.style.display="block";
+step=6;
+},2000);
+
+}
+
+}
+
+/* CHLOROFORM CAP */
+chloroCap.onclick=function(){
+
+if(step===6){
+
+instruction.innerText="Opening Chloroform Bottle";
+
+/* move cap right */
+chloroCap.style.left="80%";
+
+/* move down */
+setTimeout(()=>{
+chloroCap.style.top="40px";
+},1200);
+
+/* show next button */
+setTimeout(()=>{
+instruction.innerText="Click Next";
+nextBtn.style.display="block";
+step=7;
+},2200);
+
+}
+
+}
+
+
+function startVortex() {
+  centrifuge_test_tube.classList.add("vortex");
+  centrifuge_test_tube_b.classList.add("vortex");
+}
+
+function stopVortex() {
+  centrifuge_test_tube.classList.remove("vortex");
+  centrifuge_test_tube_b.classList.remove("vortex");
+}
+
+function roboda(){
+if(step === 12){
+f = 301.5;
+instruction.innerText = "Click on the test tube A for vortex mixing for 15 seconds"
+     centrifuge_test_tube.addEventListener("click", function () {
+           if(f === 301.5){
+            301.8;
+        startVortex();
+   setTimeout(() => {
+      stopVortex();
+      f = 302;
+      instruction.innerText = "Click on the ON button of centrifuge to on it"
+     offOnButton.addEventListener("click", function () {
+                                    if(f === 302){
+                                      f = 305
+                                    onButton.style.visibility = "visible"
+                                      offOnButton.style.visibility = "hidden"
+                                      rpmDisplay.style.visibility = "visible";
+    timeDisplay.style.visibility = "visible";
+    timeDisplay.style.display = "block";
+   
+    rpmLabel.style.visibility = "visible";
+    timeLabel.style.visibility = "visible";
+    timeDisplay.style.opacity = "100%"
+    console.log("gate is ready to open f is ?" , f)
+   
+    instruction.innerText = "Click on the OPEN LID button to open the centrifuge"
+       closeButton.addEventListener("click", function () {
+                                                                  if(f===305){
+      f=306;
+                                                                          pulse(closeButton)
+                                     closeButton.style.visibility = "hidden"
+                                     openButton.style.visibility = "visible"
+                                     centrifugeCloseLid.style.visibility = "hidden"
+                                          centrifugeUpperLidOpen.style.visibility = "visible";
+                                          centrifugeDownFilling.style.visibility = "visible";
+                     
+                                          instruction.innerText  = "Click on the test tube a to put into centrifuge for rotation"
+                                            centrifuge_test_tube.addEventListener("click", function () {
+
+                                              if(f === 306){  
+                                                f = 307; 
+                                                console.log("tube a is clicked ready to move ...") 
+                                                                                                                        
+            centrifuge_test_tube.style.top = "58%";
+             
+           setTimeout(()=>{
+                centrifuge_test_tube.style.left = "64.8%"
+                centrifuge_test_tube.style.zIndex = "21"
+                 setTimeout(()=>{
+                centrifuge_test_tube.style.height = "7%"
+                centrifuge_test_tube.style.width = "0.4%"
+                  setTimeout(()=>{
+                        centrifuge_test_tube.style.top = "63%";
+                       centrifuge_test_tube.style.transform = "translate(-220%,170%) rotate(17deg)";
+                        setTimeout(()=>{
+                          centrifuge_test_tube_b.style.top = "58%"
+                            setTimeout(()=>{
+                                 centrifuge_test_tube_b.style.left = "64.35%"
+                centrifuge_test_tube_b.style.zIndex = "21"
+                 setTimeout(()=>{
+                    centrifuge_test_tube_b.style.height = "7%"
+                centrifuge_test_tube_b.style.width = "0.4%"
+                        setTimeout(()=>{
+                           centrifuge_test_tube_b.style.top = "63%"
+                                centrifuge_test_tube_b.style.left = "67.35%"
+                      centrifuge_test_tube_b.style.transform = "translate(-225%,170%) rotate(-17deg)";
+                      f = 308
+                      instruction.innerText = "Click on the CLOSE LID button to close the centrifuge Lid"
+                             openButton.addEventListener("click", function () {
+                              if(f === 308){
+                                f =309;
+                                pulse(openButton)
+                    
+                                    centrifugeCloseLid.style.visibility = "visible";
+                                                                            centrifugeUpperLidOpen.style.visibility = "hidden";
+                                                                           openButton.style.visibility = "hidden";
+                                                                             closeButton.style.visibility = "visible";
+                                                                             instruction.innerText = "Click on the MENU button"
+
+
+
+                                            MEN.addEventListener("click", () => {
+                                                 if(f === 309){
+                                f =310;
+                                      pulse(MEN)
+                                         rpmLabel.style.fontWeight = "bold"
+                                         instruction.innerText = "Click on the ADD symbol button to increas rpm to 1100 rpm"
+                                              ADD.addEventListener("click", () => {
+    pulse(ADD)
+        if(f === 310){
+      
+      if (!rpmSet && rpm <= 1100) {
+        rpm += 50;  
+        rpmDisplay.innerText = `${rpm}`;
+        if (rpm >= 1100) {
+          rpm = 1100; 
+          rpmDisplay.innerText = `${rpm}`;
+          rpmSet = true;
+          instruction.innerText = "Clickon the set button to set the rpm of 1100"
+          f = 311;
+        }
+      }
+        SET.addEventListener("click", () => {
+           if(f === 311){
+            f = 312;
+            pulse(SET)
+             instruction.innerText = "Click on MENU button and then up and down button to set TIME of 3 min"
+              MEN.addEventListener("click", () => {
+                    if(f === 312){ 
+                       rpmLabel.style.fontWeight = "500"
+                rpmDisplay.style.fontWeight = "500"
+                timeDisplay.style.fontWeight = "900"
+                timeLabel.style.fontWeight = "900"
+                    f = 313;
+                    }else{console.log("f is not 312", f)}
+              })
+           }
+        })
+
+    }
+      })
+                                                 }
+                                            })
+                              }else{console.log("the f is not 308 it is ", f)}
+
+                             })
+                       }, 1000)
+                   }, 1000)
+                                 }, 1000)
+                           }, 1000)
+                      }, 1000)
+                         }, 1000)
+            }, 1000)
+
+                                              }else{console.log("f is not 306", f)}
+                                             })
+                                                                  }else{console.log("the value is not 305 it is ", f)}
+                                                                })
+                                      }else{console.log("the value of f is not .. 302 it is ", f)}
+                                    
+                                      })
+                                        }, 4000);
+                                      }else{console.log("no runnn")}
+                                    })
+}
+}
+
+
+function pulse(element) {
+    element.classList.add("pulse-effect");
+    setTimeout(() => {
+        element.classList.remove("pulse-effect");
+    }, 1000);
+}
+
+                                                                              let rpmSet = false;
+                                                                              let rpm = 0;
+                                                                              let timeSet = false;
+                                                                              let timeInSeconds = 0;
+
+  ADD.addEventListener("click", () => {
+    if(f === 313){
+     pulse(ADD)
+       if (!timeSet && timeInSeconds < 180) {
+        timeInSeconds += 30;
+        let mins = Math.floor(timeInSeconds / 60);
+        let secs = (timeInSeconds % 60).toString().padStart(2, '0');
+        timeDisplay.innerText = `${mins}:${secs}`;
+        instruction.innnerText = "Click on the increase button symbol to set temperature of water bath at 65°C "
+        if (timeInSeconds >= 180) {
+          timeInSeconds = 180;
+          timeSet = true;
+              instruction.innerText = "Click on the set button to set the rpm and time for centrifugation";
+          f=314;
+          SET.addEventListener("click", () => {
+            if(f===314){
+         f=315;
+           pulse(SET);
+             instruction.innerText = "Now Click on the RUN button to start the centrifuge"
+             RUN.addEventListener("click", () => {
+                if(f===315){
+         f=316;
+
+          let totalTime = 25;   // seconds
+     let riseTime = 4;    // seconds
+     let fallTime = 4;    // seconds
+     let maxRPM = 1100;
+     
+     let intervalTime = 50; // ms (smooth)
+     let currentTime = 0;
+     
+     let startTimeDisplay = 3.0; // 04.00 start
+     let timeDisplayValue = startTimeDisplay;
+
+       let rpm = 0;
+ let timer = setInterval(() => {
+  currentTime += intervalTime / 1000; // in seconds
+
+
+
+  // ⬆ Rising phase (0 → 1100)
+  if (currentTime <= riseTime) {
+    let progress = currentTime / riseTime;
+    rpm = maxRPM * progress;
+  }
+  // ➡ Steady phase (RPM stays 1100 while timer runs)
+  else if (currentTime > riseTime && currentTime <= totalTime) {
+    rpm = maxRPM;
+  }
+
+  rpm = Math.max(0, Math.round(rpm));
+  rpmDisplay.innerText = rpm;
+
+  // Timer logic (starts counting down after riseTime)
+ let timeDisplayValue;
+if (currentTime <= riseTime) {
+  timeDisplayValue = startTimeDisplay;
+} else if (currentTime <= totalTime) {
+  let effectiveTime = currentTime - riseTime;
+  let effectiveTotal = totalTime - riseTime;
+  timeDisplayValue = startTimeDisplay * (1 - effectiveTime / effectiveTotal);
+  test_tube_A.style.visibility = "visible"
+  test_tube_B.style.visibility = "visible"
+  centrifuge_test_tube.style.visibility = "hiddenn"
+  centrifuge_test_tube_b.style.visibility = "hidden"
+}
+
+// Clamp and force exact zero if we slightly overshoot
+if (currentTime >= totalTime) {
+  timeDisplayValue = 0; // ✅ Force exact zero
+}
+
+timeDisplay.innerText = timeDisplayValue.toFixed(2).padStart(5, "0");
+
+  // ⬇ After timer reaches 0 → start decreasing RPM
+  if (timeDisplayValue === 0 ) {
+    clearInterval(timer); // stop main timer
+
+    // Start RPM fall from 1100 → 0
+    let rpmFallTimer = setInterval(() => {
+      rpm -= 10; // adjust speed of decrease
+      rpm = Math.max(0, rpm);
+      rpmDisplay.innerText = rpm;
+
+      if (rpm === 0) {
+        clearInterval(rpmFallTimer);
+        timeDisplay.innerText = "00.00";
+        f = 317;
+        instruction.innerText = "Click on the OPEN LID button to open the lid of centrifuge";
+      }
+    }, 50);
+  }
+}, intervalTime);
+     
+
+
+                }
+             })
+
+            }
+          })
+        }
+      }
+    }else{console.log("f is not 313 it is", f)}
+  })
+
+  closeButton.addEventListener("click", () => {
+             if(f === 317){
+              f = 318;
+              closeButton.style.visibility = "hidden";
+        openButton.style.visibility = "visible";
+
+        // Show open lid
+        centrifugeUpperLidOpen.style.visibility = "visible";
+        // Hide closed lid
+        centrifugeCloseLid.style.visibility = "hidden";
+          instruction.innerText = "Click on the test tube A to place it into stand"
+                  test_tube_A.addEventListener("click", () => {
+                        if(f === 318){
+              f = 319;
+                    test_tube_A.style.rotate = "0deg"
+                    test_tube_A.style.top = "55%"
+                        setTimeout(()=>{
+                            test_tube_A.style.height = "17%"
+                            test_tube_A.style.width = "2%"
+                             setTimeout(()=>{
+                               test_tube_A.style.left = "41%"
+                               test_tube_A.style.zIndex = "11"
+                                  setTimeout(()=>{
+                                     test_tube_A.style.top = "75%"
+                                      setTimeout(()=>{
+                                              test_tube_B.style.rotate = "0deg"
+                    test_tube_B.style.top = "55%"
+                    setTimeout(()=>{
+                        test_tube_B.style.height = "17%"
+                            test_tube_B.style.width = "2.2%"
+                             setTimeout(()=>{
+                                  test_tube_B.style.left = "44.6%"
+                                  test_tube_B.style.zIndex = "11"
+                               setTimeout(()=>{
+                                   test_tube_B.style.top = "75%"
+                                   setTimeout(()=>{
+                                instruction.innerText = "Observe the observation table and inference"
+                                    observation_table_detergent.style.visibility = "visible"
+                                    inference_box.style.visibility = "visible"
+                                   
+                                 }, 500);
+                                  }, 1000);
+                                  }, 1000);
+                      }, 1000);
+                                        }, 1000);
+                                     }, 1000);
+                               }, 1000);
+                          }, 1000);
+                        }
+                  })
+             }
+  })
+
+  /* RESET EXPERIMENT */
+document.getElementById("resetBtn").onclick = function(){
+
+  /* reload page (simple & best) */
+  location.reload();
+
+};
+</script>
+</body>
+</html>

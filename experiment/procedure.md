@@ -1,12 +1,12 @@
-8A: Detection of Starch in Milk <br>
-Requirements (Instruments, Chemicals & Other) <br>
-Milk sample <br>
-Test tubes <br>
-Water bath <br>
-Measuring cylinder <br>
-Iodine solution <br>
+<b>Detection of Starch in Milk :</b><br><br>
+<b>Requirements (Instruments, Chemicals & Other) :</b>
+1. Milk sample <br>
+2. Test tubes <br>
+3. Water bath <br>
+4. Measuring cylinder <br>
+5. Iodine solution <br>
 
-Procedure  <br>
+<b>Procedure :</b>
 1.	Take 5 ml of milk from both the sample A and B in separate test tubes. <br>
 2.	Place both the test tubes in the water bath maintained at boiling temperature. <br>
 3.	Remove the test tubes from water bath and allow it at room temperature or 5 min. <br>
@@ -14,28 +14,30 @@ Procedure  <br>
 5.	Observe the color change in both the test tube. <br>
 6.	Development of blue colour indicates presence of starch. <br> 
    
-8B: Detection of added urea in the milk <br>
-Requirements (Instruments, Chemicals & Other) <br>
-Milk sample <br>
-Test tubes <br>
-Pippette <br>
-DMAB reagent (1.6%, w/v) <br>
+<b>Detection of added urea in the milk :</b> <br>
 
-Procedure <br>
+<b>Requirements (Instruments, Chemicals & Other) :</b>
+2. Milk sample <br>
+3. Test tubes <br>
+4. Pipette <br>
+5. DMAB reagent (1.6%, w/v) <br>
+
+<b>Procedure :</b>
 1.	Take 1 ml of milk from both the sample A and B in separate test tubes.  <br>
 2.	Add 1 ml of 1.6% DMAB reagent in both the test tube. <br>
 3.	Observe the color change in both the test tube. <br>
 4.	Appearance of distinct yellow color in milk sample shows the urea adulteration. <br>
 
-8C: Test for presence of detergent in the milk <br>
-Requirements (Instruments, Chemicals & Other) <br>
-Milk sample <br>
-Test tubes <br>
-Pippette <br>
-Methylene blue dye <br>
-Chloroform <br>
+<b>Test for presence of detergent in the milk :</b> <br>
 
-Procedure  <br>
+<b>Requirements (Instruments, Chemicals & Other) :</b>
+1. Milk sample <br>
+2. Test tubes <br>
+3. Pipette <br>
+4. Methylene blue dye <br>
+5. Chloroform <br>
+
+<b>Procedure :</b>
 1.	Take 1 ml of milk from both the sample A and B in separate test tubes.  <br>
 2.	Add 1 ml of Methylene blue dye solution followed by addition of 2 ml chloroform in both the test tubes. <br>
 3.	Vortex the contents for about 15 sec and centrifuge at about 1100 rpm for 3 min. <br>

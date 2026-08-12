@@ -1,0 +1,90 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "1.What is the main reason behind adulteration of milk?",
+      "answers": {
+        "a": "To improve taste",
+        "b": "To extend shelf life for health benefits",
+        "c": "For economic gain by increasing volume or mimicking quality",
+        "d": "To increase nutritional value"
+      },
+      "explanations": {
+        "a": "Explanation 1  <a href='www.google.com'>here</a>",
+        "b": "Explanation 2",
+        "c": "Explanation 2",
+        "d": "Explanation 2"
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "2.Which of the following is NOT commonly used as an adulterant in milk?",
+      "answers": {
+        "a": "Starch",
+        "b": "Glucose",
+        "c": "Urea",
+        "d": "Iodine"
+      },
+      "explanations": {
+        "a": "Explanation 1  <a href='www.google.com'>here</a>",
+        "b": "Explanation 2",
+        "c": "Explanation 2",
+        "d": "Explanation 2"
+      },
+      "correctAnswer": "d",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "3.Adulteration in milk can lead to which of the following health hazards?",
+      "answers": {
+        "a": "Kidney damage",
+        "b": "Tooth decay",
+        "c": "Increased immunity",
+        "d": "None of the above"
+      },
+      "explanations": {
+        "a": "Explanation 1  <a href='www.google.com'>here</a>",
+        "b": "Explanation 2",
+        "c": "Explanation 2",
+        "d": "Explanation 2"
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "4.What kind of reaction is used for detection of adulterants in milk?",
+      "answers": {
+        "a": "Radioactive",
+        "b": "Mechanical",
+        "c": "Colorimetric or chemical reaction",
+        "d": "Ultrasonic"
+      },
+      "explanations": {
+        "a": "Explanation 1  <a href='www.google.com'>here</a>",
+        "b": "Explanation 2",
+        "c": "Explanation 2",
+        "d": "Explanation 2"
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "5.Why is iodine solution used in the detection of starch in milk?",
+      "answers": {
+        "a": "It reacts with protein",
+        "b": "It reacts with starch to produce a blue color",
+        "c": "It reacts with urea to give yellow color",
+        "d": "It dissolves the adulterant"
+      },
+      "explanations": {
+        "a": "Explanation 1  <a href='www.google.com'>here</a>",
+        "b": "Explanation 2",
+        "c": "Explanation 2",
+        "d": "Explanation 2"
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    }
+  ]
+}

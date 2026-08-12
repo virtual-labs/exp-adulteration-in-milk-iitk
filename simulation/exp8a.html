@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Milk Adulteration Experiment</title>
+    <link rel="stylesheet" href="css/starch.css">
+</head>
+<body>
+  <div id="lab">
+    <img src="images/bg.png" id="bg" />
+    <img src="images/stand.png" id="stand" />
+    <img src="images/tube.png" class="tube" id="tube1" />
+    <img src="images/tube.png" class="tube" id="tube2" />
+    <img src="images/Test-tube-milk.png" id="tubefilled1" style="display:none;" />
+    <img src="images/Test-tube-milk.png" id="tubefilled2" style="display:none;" />
+    <img src="images/front.png" id="stand-front" />
+    <img src="images/milk.png" id="milk1" />
+    <img src="images/MilkB.png" id="milk2" />
+    <img src="images/measuring-cylinder.png" id="cylinder" style="display:block;" />
+    <img src="images/cylinder-milk.png" id="cylinderFilled" />
+    <img src="images/Iodine.png" id="iodine" onclick="addIodine()" />
+
+    <img src="images/cap.png" id="iodine-cap" style="transition: all 1s ease;" /> 
+    <img src="images/waterbath.png" id="waterbath" onclick="boilSample()" />
+
+    <img src="images/milk-stream.png" id="milk-pour1" class="milk-pour" />
+    <img src="images/milk-stream.png" id="milk-pour2" class="milk-pour" />
+    <img src="images/milk-stream.png" id="milk-stream-cylinder" class="milk-pour" />
+
+   
+    <div id="boilingEffect">
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+    </div>
+
+    <div id="instruction">Click on the Start button to begin the experiment</div>
+    <button id="start-btn" onclick="startExperiment()">Start Experiment</button>
+    <button id="reset-btn" onclick="resetExperiment()" style="display:none;">Reset Experiment</button>
+
+
+   <div id="resultTable" style="display:none; position:absolute; top:70%; left:60%; background:#fff; border:1px solid #000; padding:10px; z-index:20;">
+  <h3>Observation</h3>
+  <table border="1" cellpadding="5">
+    <tr><th>Sample</th><th>Color Observation</th><th>Starch Adulteration</th></tr>
+    <tr><td>A</td><td style="color:blue;">Blue</td><td>Yes</td></tr>
+    <tr><td>B</td><td>White</td><td>No</td></tr>
+  </table>
+  <p><strong>Inference:</strong> The milk sample A showed the starch adulteration.</p>
+</div>
+
+  </div>
+    <script src="js/starch.js"></script>
+</body>
+</html> 

@@ -1,4 +1,4 @@
-<b>Detection of Starch in Milk :</b><br><br>
+<b>Detection of Starch in Milk :</b><br>
 <b>Requirements (Instruments, Chemicals & Other) :</b>
 1. Milk sample <br>
 2. Test tubes <br>
@@ -15,12 +15,11 @@
 6.	Development of blue colour indicates presence of starch. <br> 
    
 <b>Detection of added urea in the milk :</b> <br>
-
-<b>Requirements (Instruments, Chemicals & Other) :</b>
-2. Milk sample <br>
-3. Test tubes <br>
-4. Pipette <br>
-5. DMAB reagent (1.6%, w/v) <br>
+<b>Requirements (Instruments, Chemicals & Other) :</b><br>
+1. Milk sample <br>
+2. Test tubes <br>
+3. Pipette <br>
+4. DMAB reagent (1.6%, w/v) <br>
 
 <b>Procedure :</b>
 1.	Take 1 ml of milk from both the sample A and B in separate test tubes.  <br>
@@ -29,7 +28,6 @@
 4.	Appearance of distinct yellow color in milk sample shows the urea adulteration. <br>
 
 <b>Test for presence of detergent in the milk :</b> <br>
-
 <b>Requirements (Instruments, Chemicals & Other) :</b>
 1. Milk sample <br>
 2. Test tubes <br>
